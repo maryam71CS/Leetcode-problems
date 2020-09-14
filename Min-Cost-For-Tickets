@@ -1,0 +1,28 @@
+class Solution {
+public:
+    int mincostTickets(vector<int>& days, vector<int>& costs) {
+        
+	int n = days.back();
+	vector<int> dp(n + 1); //declare an array of max+1 length
+
+	for (int& day: days)// initializing day that goes from day zero to n
+		dp[day] = numeric_limits<int>::max();
+        //Returns the maximum finite value representable by the numeric type T. Meaningful for all bounded types.
+	
+	for (int i = 1; i <= n; i++) {
+		if (dp[i] == 0){ //if we do not travel at any specific day we do not pay, so price of next day is same with current day.
+			dp[i] = dp[i - 1];
+        
+    }else{
+			dp[i] = min({dp[i - 1] + costs[0],
+						 dp[max(0, i - 7)] + costs[1],
+						 dp[max(0, i - 30)] + costs[2]});
+	}
+        
+    }
+	
+	return dp[n]; //objective: min cost of travel
+}
+};
+
+
