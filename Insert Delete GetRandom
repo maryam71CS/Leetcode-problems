@@ -1,0 +1,43 @@
+class RandomizedSet {
+    
+    vector<int> nums;
+    unordered_map<int, int> mymap;//first argument key and the next one value of unordered map.
+public:
+    /** Initialize your data structure here. */
+    RandomizedSet() {
+        
+    }
+    
+    /** Inserts a value to the set. Returns true if the set did not already contain the specified element. */
+    bool insert(int val) {
+        if(mymap.find(val) != mymap.end()) //if we could find elements before getting to the end of the map (element alreay exists), so can not be inserted.
+            return false;
+        else{
+        
+        nums.push_back(val);
+        mymap.insert({val, nums.size()-1});
+        return true;
+        }
+    }
+    
+    /** Removes a value from the set. Returns true if the set contained the specified element. */
+    bool remove(int val) {
+        if(mymap.find(val) == mymap.end()) { // if the value is not represented in map, we can not remove it.
+            return false;
+        }
+        else {//otherwise copy last element to given index.
+        int temp = mymap[val];
+        nums[temp] = nums[nums.size()-1];
+       mymap[nums[temp]] = temp;
+       nums.pop_back();
+        
+        mymap.erase(val);
+        return true;
+        }
+    }
+    
+    /** Get a random element from the set. */
+    int getRandom() {
+        return nums[rand() % nums.size()]; // This function gives me random value from zero to size of array -1
+    }
+};
