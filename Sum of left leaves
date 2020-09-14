@@ -1,0 +1,48 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    
+    bool is_node_Leaf(TreeNode *node) //check if node is leaf
+    { 
+       if (node == NULL) 
+           return false; 
+        
+       if (node->left == NULL && node->right == NULL) { //obviouesly
+           return true; 
+       }
+         return false; 
+    } 
+    int sum_leftLeaves(TreeNode *root) //objective is adding all left leaves
+    { 
+        int ans = 0;
+        if (root != NULL) 
+        { 
+            if (is_node_Leaf(root->left)) //case 1: root only have one left child...not any right ones
+            ans += root->left->val; //add that with zero to get answer
+            else 
+             ans += sum_leftLeaves(root->left); //otherwise if root has more left leaves, consider them for summing, left leaves exist in LEFT SUBTREE
+
+            ans += sum_leftLeaves(root->right); //left leaves exist in RIGHT SUBTREE
+        } 
+        return ans; 
+    } 
+    
+    int sumOfLeftLeaves(TreeNode* root) {//calling previous function to give the answer
+        
+      int sum;
+        sum =sum_leftLeaves(root);
+        
+        return sum;
+        
+    }
+};
