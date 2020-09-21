@@ -1,0 +1,22 @@
+class Solution {
+public:
+    int numSquares(int n) {
+        
+        int dp[n + 1];
+        dp[0] = 0;
+        
+        for(int i = 1; i <= n; i++){
+         dp[i] = INT_MAX;
+            
+            for(int j = 1; j*j <= i; j++){
+                
+                dp[i] = min(dp[i], 1+ dp[i - j*j]);
+            }
+           }
+        
+        return dp[n];
+    }
+};
+
+//Runtime= O(N *root N)
+//if n=0 it returns 0, if n=1, 2, 3 it returns n. At n=4, the calls will be start. we start with j=1, then j=2, when we count the calls reaching the result of subtraction we do in ine 13.
