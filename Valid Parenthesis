@@ -1,0 +1,31 @@
+
+class Solution {
+public:
+    bool isValid(string s) {
+        
+        if(s.size()==0) 
+            return true;
+        
+        stack<int> myStack;
+        
+        for(int i=0; i<s.size(); i++){
+            
+            char ch = s[i];
+            if(ch=='(' or ch=='{' or ch=='[')
+                myStack.push(ch);//accepting cases goes through stack.
+            
+            else if(myStack.empty() and (ch==')' or ch=='}' or ch==']'))
+                myStack.push(ch); //sme happens like previous part here.
+            else {
+                if(ch=='}' and myStack.top()=='{')//it means top of stack and the character are match.
+                    myStack.pop(); // so just pop from stack as we found the match one.
+                else if(ch==')' and myStack.top()=='(') 
+                    myStack.pop();
+                else if(ch==']' and myStack.top()=='[') 
+                    myStack.pop();
+                else myStack.push(ch);// if we could not find the match one just push the character to stack.
+            }
+        }
+        return myStack.empty(); // if stack is empty it means all characters in stack are match with the character we have.
+    }
+};
